@@ -25,27 +25,27 @@ namespace CourseProject.BL.CourceService
             _courserepository.Delete(id);
         }
 
-        public CourceDTO Get(int id)
+        public CourceCard Get(int id)
         {
             var currentCourse = _courserepository.Get(id);
-            return mapper.Map<CourceDTO>(currentCourse);
+            return mapper.Map<CourceCard>(currentCourse);
         }
 
-        public IEnumerable<CourceDTO> GetAll()
+        public IEnumerable<CourceCard> GetAll()
         {
-            return _courserepository.GetAll().Select(mapper.Map<CourceDTO>);
+            return _courserepository.GetAll().Select(mapper.Map<CourceCard>);
         }
 
-        public IEnumerable<StudentDTO> GetAllStudents()
+        public IEnumerable<StudentCard> GetAllStudents()
         {
-           return _studentrepository.GetAll().Select(mapper.Map<StudentDTO>);
+           return _studentrepository.GetAll().Select(mapper.Map<StudentCard>);
         }
 
         public void Update(int id, UpdateCourceDTO updateCourceDTO)
         {
             var courseToUpdate = _courserepository.Get(id);
             courseToUpdate.Name = updateCourceDTO.Name;
-            courseToUpdate.Teacher = updateCourceDTO.Teacher;
+            courseToUpdate.TeacherId = updateCourceDTO.TeacherId;
 
             _courserepository.Update(id, courseToUpdate);
 

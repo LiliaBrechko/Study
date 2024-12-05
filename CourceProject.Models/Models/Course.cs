@@ -9,9 +9,9 @@ namespace CourseProject.DAL.Models
     public class Course : IEntity
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public Teacher Teacher { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public Teacher? Teacher { get; set; }
         public int TeacherId {  get; set; }
-        public IEnumerable<Student> Students { get; set; }
+        public ICollection<Student>? Students { get; set; }
     }
 }

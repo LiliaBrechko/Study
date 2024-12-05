@@ -16,11 +16,11 @@ namespace CourseProject.BL
     {
         public MappingProfile()
         {
-            CreateMap<Course, CourceDTO>();
+            CreateMap<Course, CourceCard>(); 
             CreateMap<AddCourceDTO, Course>();
             CreateMap<UpdateCourceDTO, Course>();
 
-            CreateMap<Student, StudentDTO>();
+            CreateMap<Student, StudentCard>();
             CreateMap<AddStudentDTO, Student>();
             CreateMap<UpdateStudentDTO, Student>();
 

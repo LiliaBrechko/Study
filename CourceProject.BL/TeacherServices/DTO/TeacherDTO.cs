@@ -9,8 +9,9 @@ namespace CourseProject.BL.TeacherServices.DTO
 {
     public class TeacherDTO
     {
-        public string? Name { get; set; }
-        public string? Speciality { get; set; }
-        public IEnumerable<Course>? Courses { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Speciality { get; set; } = string.Empty;
+        public IEnumerable<int> Courses { get; set; } = Enumerable.Empty<int>();
     }
 }

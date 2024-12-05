@@ -1,4 +1,5 @@
-﻿using CourseProject.DAL.Models;
+﻿using CourseProject.BL.TeacherServices.DTO;
+using CourseProject.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace CourseProject.BL.CourceService.DTO
 {
     public class UpdateCourceDTO
     {
-        public string? Name { get; set; }
-        public Teacher? Teacher { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public int TeacherId { get; set; }
     }
 }

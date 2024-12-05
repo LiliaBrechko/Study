@@ -16,6 +16,6 @@ namespace CourseProject.BL.TeacherServices
         TeacherDTO Get(int id);
         IEnumerable<TeacherDTO> GetAll();
         void Delete(int id);
-        IEnumerable<CourceDTO> GetAllCource();
+        IEnumerable<CourceCard> GetAllCource();
     }
 }

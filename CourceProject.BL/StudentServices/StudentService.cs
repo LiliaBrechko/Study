@@ -15,42 +15,80 @@ namespace CourseProject.BL.StudentServices
     {
         public int Create(AddStudentDTO addStudentDTO)
         {
-            throw new NotImplementedException();
+            var student = mapper.Map<Student>(addStudentDTO);
+            return _studentrepository.Create(student);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _studentrepository.Delete(id);
         }
 
-        public void EnrollToTheCource(CourceDTO courceDTO)
+        public void EnrollToTheCource(int studentid, int courseId)
         {
-            throw new NotImplementedException();
+            var student = _studentrepository.Get(studentid, c => c.Courses!);
+            if (student == null)
+                throw new Exception($"Student with ID {studentid} not found.");
+
+            var course = _courserepository.Get(courseId);
+            if (course == null)
+                throw new Exception($"Course with ID {courseId} not found.");
+
+            if (student.Courses != null && student.Courses.Any(c => c.ID == courseId))
+                throw new Exception($"Student is already enrolled in the course with ID {courseId}.");
+            
+
+            if (student.Courses == null)
+                student.Courses = new List<Course>();
+            
+
+            student.Courses.Add(course);
+            _studentrepository.Update(studentid, student);
+
         }
 
-        public StudentDTO Get(int id)
+        public StudentCard Get(int id)
         {
-            throw new NotImplementedException();
+            var currentStudent = _studentrepository.Get(id);
+            return mapper.Map<StudentCard>(currentStudent);
         }
 
-        public IEnumerable<StudentDTO> GetAll()
+        public IEnumerable<StudentCard> GetAll()
         {
-            throw new NotImplementedException();
+            return _studentrepository.GetAll().Select(mapper.Map<StudentCard>); ;
         }
 
-        public IEnumerable<CourceDTO> GetAllCource()
+        public IEnumerable<CourceCard> GetAllCource()
         {
-            throw new NotImplementedException();
+            return _studentrepository.GetAll().Select(mapper.Map<CourceCard>);
         }
 
-        public void UnEnrollToTheCource(CourceDTO courceDTO)
+        public void UnEnrollToTheCource(int studentid, int courseId)
         {
-            throw new NotImplementedException();
+            var student = _studentrepository.Get(studentid, c => c.Courses!);
+            if (student == null)
+                throw new Exception($"Student with ID {studentid} not found.");
+
+            var course = _courserepository.Get(courseId);
+            if (course == null)
+                throw new Exception($"Course with ID {courseId} not found.");
+
+            if (student.Courses == null || !student.Courses.Any(c => c.ID == courseId))
+                throw new Exception($"Student is not enrolled in the course with ID {courseId}.");
+
+            student.Courses.Remove(course);
+            _studentrepository.Update(courseId, student);
+
+
+
         }
 
         public void Update(int id, UpdateStudentDTO updateStudentDTO)
         {
-            throw new NotImplementedException();
+            var studentToUpdate = _studentrepository.Get(id);
+            studentToUpdate.Name = updateStudentDTO.Name;
+
+            _studentrepository.Update(id, studentToUpdate);
         }
     }
 }

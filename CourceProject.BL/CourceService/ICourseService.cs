@@ -12,10 +12,10 @@ namespace CourseProject.BL.CourceService
     {
         int Create(AddCourceDTO addCourceDTO);
         void Update(int id, UpdateCourceDTO updateCourceDTO);
-        CourceDTO Get(int id);
-        IEnumerable<CourceDTO> GetAll();
+        CourceCard Get(int id);
+        IEnumerable<CourceCard> GetAll();
         void Delete(int id);
-        IEnumerable<StudentDTO> GetAllStudents();
+        IEnumerable<StudentCard> GetAllStudents();
 
 
     }

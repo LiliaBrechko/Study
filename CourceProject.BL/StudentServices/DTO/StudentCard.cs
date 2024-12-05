@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace CourseProject.BL.StudentServices.DTO
 {
-    public class UpdateStudentDTO
+    public class StudentCard
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public IEnumerable<int> Cources { get; set; } = Enumerable.Empty<int>();
+        public IEnumerable<CourseListItem> Courses { get; set; } = Enumerable.Empty<CourseListItem>();
     }
 }

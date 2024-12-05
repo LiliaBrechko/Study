@@ -12,12 +12,12 @@ namespace CourseProject.BL.StudentServices
     {
         int Create(AddStudentDTO addStudentDTO);
         void Update(int id, UpdateStudentDTO updateStudentDTO);
-        StudentDTO Get(int id);
-        IEnumerable<StudentDTO> GetAll();
+        StudentCard Get(int id);
+        IEnumerable<StudentCard> GetAll();
         void Delete(int id);
-        void EnrollToTheCource(CourceDTO courceDTO);
-        void UnEnrollToTheCource(CourceDTO courceDTO);
-        IEnumerable<CourceDTO> GetAllCource();
+        void EnrollToTheCource(int studentId, int courseId);
+        void UnEnrollToTheCource(int studentId, int courseId);
+        IEnumerable<CourceCard> GetAllCource();
 
     }
 }

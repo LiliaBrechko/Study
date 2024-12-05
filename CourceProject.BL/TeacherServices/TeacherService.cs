@@ -11,36 +11,42 @@ using System.Threading.Tasks;
 
 namespace CourseProject.BL.TeacherServices
 {
-    public class TeacherService(IRepository<Course> _courserepository, IRepository<Teacher> _teacherrepository, IMapper mapper) : ITeacherService
+    public class TeacherService(IRepository<Teacher> _teacherrepository, IMapper mapper) : ITeacherService
     {
         public int Create(AddTeacherDTO addTeacherDTO)
         {
-            throw new NotImplementedException();
+            var teacher = mapper.Map<Teacher>(addTeacherDTO);
+            return _teacherrepository.Create(teacher);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _teacherrepository.Delete(id);
         }
 
         public TeacherDTO Get(int id)
         {
-            throw new NotImplementedException();
+            var currentteacher =  _teacherrepository.Get(id);
+            return mapper.Map<TeacherDTO>(currentteacher);
         }
 
         public IEnumerable<TeacherDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return _teacherrepository.GetAll().Select(mapper.Map<TeacherDTO>);
         }
 
-        public IEnumerable<CourceDTO> GetAllCource()
+        public IEnumerable<CourceCard> GetAllCource()
         {
-            throw new NotImplementedException();
+            return _teacherrepository.GetAll().Select(mapper.Map<CourceCard>);
         }
 
         public void Update(int id, UpdateTeacherDTO updateTeacherDTO)
         {
-            throw new NotImplementedException();
+            var teacherToUpdate = _teacherrepository.Get(id);
+            teacherToUpdate.Name = updateTeacherDTO.Name;
+            teacherToUpdate.Speciality = updateTeacherDTO.Speciality;
+
+            _teacherrepository.Update(id, teacherToUpdate);
         }
     }
 }

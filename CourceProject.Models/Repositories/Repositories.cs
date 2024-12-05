@@ -1,6 +1,7 @@
 ﻿using CourseProject.DAL.EF_Infrastructure;
 using CourseProject.DAL.IRepositories;
 using CourseProject.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace CourseProject.DAL.Repositories
             {
                 foreach (var entityID in id)
                 {
-                    var entityToRemove = contex.Set<T>().FirstOrDefault(x => x.ID == entityID);
+                    var entityToRemove = contex.Set<T>().First(x => x.ID == entityID);
                     contex.Remove(entityToRemove);
                     contex.SaveChanges();
                 }
@@ -40,11 +41,19 @@ namespace CourseProject.DAL.Repositories
             
         }
 
-        public T Get(int id)
+        public T Get(int id, params Expression<Func<T, object>>[] includes)
         {
             using(var contex = new DB_Configuration())
             {
-                return  contex.Set<T>().FirstOrDefault(x => x.ID == id);
+                IQueryable<T> query = contex.Set<T>();
+                if (includes != null)
+                {
+                    foreach(var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+                return query.First(x => x.ID == id);
             }
         }
 
@@ -60,7 +69,7 @@ namespace CourseProject.DAL.Repositories
         {
             using(var context  = new DB_Configuration())
             {
-                var entityToUpdate = context.Set<T>().FirstOrDefault(x =>x.ID == id);
+                var entityToUpdate = context.Set<T>().First(x =>x.ID == id);
                 context.Entry(entityToUpdate).CurrentValues.SetValues(entity);
                 context.SaveChanges();
 
