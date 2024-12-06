@@ -24,6 +24,7 @@ namespace CourseProject.BL
             CreateMap<Student, StudentCard>();
             CreateMap<AddStudentDTO, Student>();
             CreateMap<UpdateStudentDTO, Student>();
+            CreateMap<Student, StudentListItem>();
 
             CreateMap<Teacher, TeacherCard>();
             CreateMap<AddTeacherDTO, Teacher>();

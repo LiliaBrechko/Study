@@ -3,6 +3,7 @@ using CourseProject.BL.CourceService.DTO;
 using CourseProject.BL.StudentServices.DTO;
 using CourseProject.DAL.IRepositories;
 using CourseProject.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace CourseProject.BL.CourceService
 
         public int Create(AddCourceDTO addCourceDTO)
         {
-            var course =  mapper.Map<Course>(addCourceDTO);
+            var course = mapper.Map<Course>(addCourceDTO);
             return _courserepository.Create(course);
         }
 
@@ -27,7 +28,7 @@ namespace CourseProject.BL.CourceService
 
         public CourceCard Get(int id)
         {
-            var currentCourse = _courserepository.Get(id, t => t.Teacher!, x=>x.Students!);
+            var currentCourse = _courserepository.Get(id, query => query.Include(x => x.Teacher).Include(x => x.Students));
             return mapper.Map<CourceCard>(currentCourse);
         }
 
@@ -38,7 +39,7 @@ namespace CourseProject.BL.CourceService
 
         public IEnumerable<StudentCard> GetAllStudents()
         {
-           return _studentrepository.GetAll().Select(mapper.Map<StudentCard>);
+            return _studentrepository.GetAll().Select(mapper.Map<StudentCard>);
         }
 
         public void Update(int id, UpdateCourceDTO updateCourceDTO)

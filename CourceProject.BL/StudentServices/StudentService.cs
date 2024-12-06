@@ -3,6 +3,7 @@ using CourseProject.BL.CourceService.DTO;
 using CourseProject.BL.StudentServices.DTO;
 using CourseProject.DAL.IRepositories;
 using CourseProject.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace CourseProject.BL.StudentServices
 
         public void EnrollToTheCource(int studentid, int courseId)
         {
-            var student = _studentrepository.Get(studentid, c => c.Courses!);
+            var student = _studentrepository.Get(studentid, query => query.Include(x => x.Courses));
             if (student == null)
                 throw new Exception($"Student with ID {studentid} not found.");
 
@@ -36,11 +37,11 @@ namespace CourseProject.BL.StudentServices
 
             if (student.Courses != null && student.Courses.Any(c => c.ID == courseId))
                 throw new Exception($"Student is already enrolled in the course with ID {courseId}.");
-            
+
 
             if (student.Courses == null)
                 student.Courses = new List<Course>();
-            
+
 
             student.Courses.Add(course);
             _studentrepository.Update(studentid, student);
@@ -49,23 +50,23 @@ namespace CourseProject.BL.StudentServices
 
         public StudentCard Get(int id)
         {
-            var currentStudent = _studentrepository.Get(id);
+            var currentStudent = _studentrepository.Get(id, query=>query.Include(x=>x.Courses)!.ThenInclude(x=>x.Teacher));
             return mapper.Map<StudentCard>(currentStudent);
         }
 
-        public IEnumerable<StudentCard> GetAll()
+        public IEnumerable<StudentListItem> GetAll()
         {
-            return _studentrepository.GetAll().Select(mapper.Map<StudentCard>); ;
+            return _studentrepository.GetAll().Select(mapper.Map<StudentListItem>); ;
         }
 
-        public IEnumerable<CourceCard> GetAllCource()
+        public IEnumerable<CourseListItem> GetAllCource(int studentId)
         {
-            return _studentrepository.GetAll().Select(mapper.Map<CourceCard>);
+            return _studentrepository.Get(studentId, query=>query.Include(x=>x.Courses)).Courses!.Select(mapper.Map<CourseListItem>);
         }
 
         public void UnEnrollToTheCource(int studentid, int courseId)
         {
-            var student = _studentrepository.Get(studentid, c => c.Courses!);
+            var student = _studentrepository.Get(studentid, query=>query.Include(x=>x.Courses));
             if (student == null)
                 throw new Exception($"Student with ID {studentid} not found.");
 

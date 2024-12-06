@@ -3,6 +3,7 @@ using CourseProject.BL.CourceService.DTO;
 using CourseProject.BL.TeacherServices.DTO;
 using CourseProject.DAL.IRepositories;
 using CourseProject.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace CourseProject.BL.TeacherServices
 
         public IEnumerable<CourseListItem> GetAllCource(int id)
         {
-            return _teacherrepository.Get(id, t => t.Courses).Courses.Select(mapper.Map<CourseListItem>);
+            return _teacherrepository.Get(id, query=>query.Include(x=>x.Courses)).Courses.Select(mapper.Map<CourseListItem>);
         }
 
         public void Update(int id, UpdateTeacherDTO updateTeacherDTO)
