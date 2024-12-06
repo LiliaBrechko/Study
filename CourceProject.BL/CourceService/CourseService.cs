@@ -31,9 +31,9 @@ namespace CourseProject.BL.CourceService
             return mapper.Map<CourceCard>(currentCourse);
         }
 
-        public IEnumerable<CourceCard> GetAll()
+        public IEnumerable<CourseListItem> GetAll()
         {
-            return _courserepository.GetAll().Select(mapper.Map<CourceCard>);
+            return _courserepository.GetAll().Select(mapper.Map<CourseListItem>);
         }
 
         public IEnumerable<StudentCard> GetAllStudents()
