@@ -27,7 +27,7 @@ namespace CourseProject.BL.CourceService
 
         public CourceCard Get(int id)
         {
-            var currentCourse = _courserepository.Get(id);
+            var currentCourse = _courserepository.Get(id, t => t.Teacher!, x=>x.Students!);
             return mapper.Map<CourceCard>(currentCourse);
         }
 

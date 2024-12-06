@@ -1,5 +1,5 @@
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Data Source=Univercity.db"
+    "DefaultConnection": "Data Source=E:\\Study\\CourceProject.Models\\Univercity.db"
   }
 }

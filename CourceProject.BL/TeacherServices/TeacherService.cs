@@ -24,20 +24,20 @@ namespace CourseProject.BL.TeacherServices
             _teacherrepository.Delete(id);
         }
 
-        public TeacherDTO Get(int id)
+        public TeacherCard Get(int id)
         {
             var currentteacher =  _teacherrepository.Get(id);
-            return mapper.Map<TeacherDTO>(currentteacher);
+            return mapper.Map<TeacherCard>(currentteacher);
         }
 
-        public IEnumerable<TeacherDTO> GetAll()
+        public IEnumerable<TeacherListItem> GetAll()
         {
-            return _teacherrepository.GetAll().Select(mapper.Map<TeacherDTO>);
+            return _teacherrepository.GetAll().Select(mapper.Map<TeacherListItem>);
         }
 
-        public IEnumerable<CourceCard> GetAllCource()
+        public IEnumerable<CourseListItem> GetAllCource(int id)
         {
-            return _teacherrepository.GetAll().Select(mapper.Map<CourceCard>);
+            return _teacherrepository.Get(id, t => t.Courses).Courses.Select(mapper.Map<CourseListItem>);
         }
 
         public void Update(int id, UpdateTeacherDTO updateTeacherDTO)

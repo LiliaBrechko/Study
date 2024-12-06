@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace CourseProject.BL.TeacherServices.DTO
 {
-    public class TeacherDTO
+    public class TeacherCard
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Speciality { get; set; } = string.Empty;
-        public IEnumerable<int> Courses { get; set; } = Enumerable.Empty<int>();
+        public IEnumerable<(int id, string name)> Courses { get; set; } = Enumerable.Empty<(int, string)>();
     }
 }
