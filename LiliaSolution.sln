@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.WebApi", "CourceProject.WebApi\CourseProject.WebApi.csproj", "{D348BCC2-1836-414C-AE62-A4328F9C24B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseProject.WebApi", "CourceProject.WebApi\CourseProject.WebApi.csproj", "{D348BCC2-1836-414C-AE62-A4328F9C24B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.DAL", "CourceProject.Models\CourseProject.DAL.csproj", "{1B2F81B6-89D5-4A4C-BF5E-1C1F2C598E39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseProject.DAL", "CourceProject.Models\CourseProject.DAL.csproj", "{1B2F81B6-89D5-4A4C-BF5E-1C1F2C598E39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.BL", "CourceProject.BL\CourseProject.BL.csproj", "{9C36949F-382E-4281-894B-B1C5CA495699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseProject.BL", "CourceProject.BL\CourseProject.BL.csproj", "{9C36949F-382E-4281-894B-B1C5CA495699}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CourseProject.Tests", "CourseProject.Tests", "{E3309DBE-6B6C-466C-A748-1305ABE20E0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.IntefrationTests", "CourseProject.IntefrationTests\CourseProject.IntefrationTests.csproj", "{913D66E2-20C2-4D38-BE14-305718722746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +31,16 @@ Global
 		{9C36949F-382E-4281-894B-B1C5CA495699}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C36949F-382E-4281-894B-B1C5CA495699}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C36949F-382E-4281-894B-B1C5CA495699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{913D66E2-20C2-4D38-BE14-305718722746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{913D66E2-20C2-4D38-BE14-305718722746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{913D66E2-20C2-4D38-BE14-305718722746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{913D66E2-20C2-4D38-BE14-305718722746}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{913D66E2-20C2-4D38-BE14-305718722746} = {E3309DBE-6B6C-466C-A748-1305ABE20E0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5BD98CA0-2ECC-4E3E-A63C-8FA0339805DE}

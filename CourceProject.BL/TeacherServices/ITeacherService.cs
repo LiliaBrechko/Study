@@ -14,7 +14,7 @@ namespace CourseProject.BL.TeacherServices
         int Create(AddTeacherDTO addTeacherDTO);
         void Update(int id, UpdateTeacherDTO updateTeacherDTO);
         TeacherCard Get(int id);
-        IEnumerable<TeacherListItem> GetAll();
+        IEnumerable<TeacherListItem> GetAll(IEnumerable<int>? ids);
         void Delete(int id);
         IEnumerable<CourseListItem> GetAllCource(int id);
     }

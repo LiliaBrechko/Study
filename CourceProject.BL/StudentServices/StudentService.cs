@@ -44,7 +44,7 @@ namespace CourseProject.BL.StudentServices
 
 
             student.Courses.Add(course);
-            _studentrepository.Update(studentid, student);
+            _studentrepository.Update(student);
 
         }
 
@@ -78,7 +78,7 @@ namespace CourseProject.BL.StudentServices
                 throw new Exception($"Student is not enrolled in the course with ID {courseId}.");
 
             student.Courses.Remove(course);
-            _studentrepository.Update(courseId, student);
+            _studentrepository.Update(student);
 
 
 
@@ -89,7 +89,7 @@ namespace CourseProject.BL.StudentServices
             var studentToUpdate = _studentrepository.Get(id);
             studentToUpdate.Name = updateStudentDTO.Name;
 
-            _studentrepository.Update(id, studentToUpdate);
+            _studentrepository.Update(studentToUpdate);
         }
     }
 }

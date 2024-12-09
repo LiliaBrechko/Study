@@ -9,61 +9,78 @@ using System.Linq.Expressions;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseProject.DAL.Repositories
 {
     public class Repository<T> : IDisposable, IRepository<T> where T : class, IEntity
     {
-        private readonly DB_Configuration context;
-
-        public Repository()
-        {
-            context = new DB_Configuration();
-        }
-
         public int Create(T entity)
         {
-                context.Add(entity);
-                context.SaveChanges();
-                return entity.ID;
+            using var context = new DB_Configuration();
+            context.Add(entity);
+            context.SaveChanges();
+            return entity.ID;
         }
 
         public void Delete(params int[] id)
         {
-                foreach (var entityID in id)
-                {
-                    var entityToRemove = context.Set<T>().First(x => x.ID == entityID);
-                    context.Remove(entityToRemove);
-                    context.SaveChanges();
-                }
-            
+            using var context = new DB_Configuration();
+            foreach (var entityID in id)
+            {
+                var entityToRemove = context.Set<T>().First(x => x.ID == entityID);
+                context.Remove(entityToRemove);
+                context.SaveChanges();
+            }
+
         }
 
         public void Dispose()
         {
+            using var context = new DB_Configuration();
             context.Dispose();
         }
 
         public T Get(int id, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
         {
-            IQueryable<T> query = context.Set<T>();
+            using var context = new DB_Configuration();
+                IQueryable<T> query = context.Set<T>();
 
-            if (includeFunc != null) 
-            { 
-                query = includeFunc(query); 
+            if (includeFunc != null)
+            {
+                query = includeFunc(query);
             }
 
-                return query.First(x => x.ID == id);
+            return query.First(x => x.ID == id);
+
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null)
         {
-                return context.Set<T>().ToList();
+            using (var context = new DB_Configuration())
+            {
+                IQueryable<T> set = context.Set<T>();
+
+                if(predicate != null)
+                {
+                    set = set.Where(predicate);
+                }
+
+                return set.ToArray();
+            }
         }
 
-        public void Update(int id, T entity)
+        public void Update(T entity)
         {
+            using (var context = new DB_Configuration())
+            {
+                context.Set<T>().Update(entity);
                 context.SaveChanges();
+
+            }
+
         }
     }
 }

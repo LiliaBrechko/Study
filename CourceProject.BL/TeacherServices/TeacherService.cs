@@ -31,9 +31,14 @@ namespace CourseProject.BL.TeacherServices
             return mapper.Map<TeacherCard>(currentteacher);
         }
 
-        public IEnumerable<TeacherListItem> GetAll()
+        public IEnumerable<TeacherListItem> GetAll(IEnumerable<int>? ids)
         {
-            return _teacherrepository.GetAll().Select(mapper.Map<TeacherListItem>);
+            var teachers = ids != null
+               ?  _teacherrepository.GetAll(t => ids.Contains(t.ID))
+               : _teacherrepository.GetAll();
+
+
+            return teachers.Select(mapper.Map<TeacherListItem>);
         }
 
         public IEnumerable<CourseListItem> GetAllCource(int id)
@@ -47,7 +52,7 @@ namespace CourseProject.BL.TeacherServices
             teacherToUpdate.Name = updateTeacherDTO.Name;
             teacherToUpdate.Speciality = updateTeacherDTO.Speciality;
 
-            _teacherrepository.Update(id, teacherToUpdate);
+            _teacherrepository.Update(teacherToUpdate);
         }
     }
 }

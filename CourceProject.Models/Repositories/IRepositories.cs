@@ -13,10 +13,10 @@ namespace CourseProject.DAL.IRepositories
         public interface IRepository<T> where T : class, IEntity
         {
             int Create(T entity);
-            void Update(int id, T entity);
+            void Update(T entity);
             void Delete(params int[] id);
             T Get(int id, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null);
-            IEnumerable<T> GetAll();
+            IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null);
 
         }
     

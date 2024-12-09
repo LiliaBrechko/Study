@@ -48,7 +48,7 @@ namespace CourseProject.BL.CourceService
             courseToUpdate.Name = updateCourceDTO.Name;
             courseToUpdate.TeacherId = updateCourceDTO.TeacherId;
 
-            _courserepository.Update(id, courseToUpdate);
+            _courserepository.Update(courseToUpdate);
 
         }
     }
