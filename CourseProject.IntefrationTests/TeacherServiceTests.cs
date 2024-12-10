@@ -8,7 +8,7 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace CourseProject.IntefrationTests
+namespace CourseProject.IntegrationTests
 {
     public class TeacherServiceTests
     {
@@ -19,7 +19,7 @@ namespace CourseProject.IntefrationTests
         public TeacherServiceTests()
         {
             var provider = new ServiceCollection().RegisterRepositories().RegisterServices().BuildServiceProvider();
-            this.teacherservice = provider.GetService<ITeacherService>();
+            teacherservice = provider.GetService<ITeacherService>();
             _teacherrepository = provider.GetService<IRepository<Teacher>>();
             _courserepository = provider.GetService<IRepository<Course>>();
         }
@@ -29,7 +29,7 @@ namespace CourseProject.IntefrationTests
         public void AddTeacherIsSuccessful()
         {
             //arrange
-            var teacherDTO = new AddTeacherDTO() { Name = Guid.NewGuid().ToString() , Speciality = Guid.NewGuid().ToString()};
+            var teacherDTO = new AddTeacherDTO() { Name = Guid.NewGuid().ToString(), Speciality = Guid.NewGuid().ToString() };
             //act
             var result = teacherservice.Create(teacherDTO);
             //assert
@@ -77,7 +77,7 @@ namespace CourseProject.IntefrationTests
             var newteacherId = _teacherrepository.Create(new Teacher() { Name = teacherName, Speciality = teacherSpeciality });
 
             //act
-            var teacher =  _teacherrepository.Get(newteacherId);
+            var teacher = _teacherrepository.Get(newteacherId);
 
             //assert
             teacher.Name.Should().Be(teacherName);
@@ -108,7 +108,7 @@ namespace CourseProject.IntefrationTests
             teacher2.Speciality.Should().Be(teacherSpeciality2);
         }
 
-        [Fact] 
+        [Fact]
         public void GetAllCoursesIsCorrect()
         {
             //arrange
@@ -121,7 +121,7 @@ namespace CourseProject.IntefrationTests
             var courceName2 = Guid.NewGuid().ToString();
             var courceId2 = _courserepository.Create(new Course() { Name = courceName2, TeacherId = newteacherId });
             //act
-             var result = teacherservice.GetAllCource(newteacherId);
+            var result = teacherservice.GetAllCource(newteacherId);
 
             //assert
             result.Should().HaveCount(2);

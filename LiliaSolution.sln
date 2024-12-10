@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseProject.BL", "CourceP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CourseProject.Tests", "CourseProject.Tests", "{E3309DBE-6B6C-466C-A748-1305ABE20E0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.IntefrationTests", "CourseProject.IntefrationTests\CourseProject.IntefrationTests.csproj", "{913D66E2-20C2-4D38-BE14-305718722746}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseProject.IntegrationTests", "CourseProject.IntefrationTests\CourseProject.IntegrationTests.csproj", "{913D66E2-20C2-4D38-BE14-305718722746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

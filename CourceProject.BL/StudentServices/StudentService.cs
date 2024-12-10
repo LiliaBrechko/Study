@@ -54,9 +54,11 @@ namespace CourseProject.BL.StudentServices
             return mapper.Map<StudentCard>(currentStudent);
         }
 
-        public IEnumerable<StudentListItem> GetAll()
+        public IEnumerable<StudentListItem> GetAll(IEnumerable<int>? ids = null)
         {
-            return _studentrepository.GetAll().Select(mapper.Map<StudentListItem>); ;
+            if (ids == null)
+            return _studentrepository.GetAll().Select(mapper.Map<StudentListItem>); 
+            return _studentrepository.GetAll(x => ids.Contains(x.ID)).Select(mapper.Map<StudentListItem>);
         }
 
         public IEnumerable<CourseListItem> GetAllCource(int studentId)
