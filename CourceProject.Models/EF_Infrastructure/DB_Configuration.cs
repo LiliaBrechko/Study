@@ -17,7 +17,7 @@ namespace CourseProject.DAL.EF_Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var config = new ConfigurationBuilder().AddJsonFile("E:\\Study\\CourceProject.Models\\EF_Infrastructure\\ConnectionDetails.json").SetBasePath(Directory.GetCurrentDirectory()).Build();
+            var config = new ConfigurationBuilder().AddJsonFile("F:\\LiliaStudySelf\\CourceProject.Models\\EF_Infrastructure\\ConnectionDetails.json").SetBasePath(Directory.GetCurrentDirectory()).Build();
             optionsBuilder.UseSqlite(config.GetConnectionString("DefaultConnection"));
         }
 
