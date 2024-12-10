@@ -27,7 +27,7 @@ namespace CourseProject.BL.TeacherServices
 
         public TeacherCard Get(int id)
         {
-            var currentteacher = _teacherrepository.Get(id);
+            var currentteacher = _teacherrepository.Get(id, x => x.Include(c => c.Courses));
             return mapper.Map<TeacherCard>(currentteacher);
         }
 

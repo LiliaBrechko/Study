@@ -51,20 +51,20 @@ namespace CourseProject.BL.StudentServices
 
         public StudentCard Get(int id)
         {
-            var currentStudent = _studentrepository.Get(id, query=>query.Include(x=>x.Courses)!.ThenInclude(x=>x.Teacher));
+            var currentStudent = _studentrepository.Get(id, query => query.Include(x => x.Courses)!.ThenInclude(x => x.Teacher));
             return mapper.Map<StudentCard>(currentStudent);
         }
 
         public IEnumerable<StudentListItem> GetAll(IEnumerable<int>? ids = null)
         {
             if (ids == null)
-            return _studentrepository.GetAll().Select(mapper.Map<StudentListItem>); 
+                return _studentrepository.GetAll().Select(mapper.Map<StudentListItem>);
             return _studentrepository.GetAll(x => ids.Contains(x.ID)).Select(mapper.Map<StudentListItem>);
         }
 
         public IEnumerable<CourseListItem> GetAllCource(int studentId)
         {
-            return _studentrepository.Get(studentId, query=>query.Include(x=>x.Courses)).Courses!.Select(mapper.Map<CourseListItem>);
+            return _studentrepository.Get(studentId, query => query.Include(x => x.Courses).ThenInclude(x => x.Teacher)).Courses!.Select(mapper.Map<CourseListItem>);
         }
 
         public void UnEnrollToTheCource(int studentId, int courseId)
