@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CourseProject.BL.CourceService.DTO;
 using CourseProject.BL.StudentServices.DTO;
+using CourseProject.DAL.EF_Infrastructure;
 using CourseProject.DAL.IRepositories;
 using CourseProject.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -66,24 +67,19 @@ namespace CourseProject.BL.StudentServices
             return _studentrepository.Get(studentId, query=>query.Include(x=>x.Courses)).Courses!.Select(mapper.Map<CourseListItem>);
         }
 
-        public void UnEnrollToTheCource(int studentid, int courseId)
+        public void UnEnrollToTheCource(int studentId, int courseId)
         {
-            var student = _studentrepository.Get(studentid, query=>query.Include(x=>x.Courses));
-            if (student == null)
-                throw new Exception($"Student with ID {studentid} not found.");
-
+            var student = _studentrepository.Get(studentId, x => x.Include(s => s.Courses));
             var course = _courserepository.Get(courseId);
-            if (course == null)
-                throw new Exception($"Course with ID {courseId} not found.");
 
-            if (student.Courses == null || !student.Courses.Any(c => c.ID == courseId))
-                throw new Exception($"Student is not enrolled in the course with ID {courseId}.");
+            if (student == null || course == null)
+                throw new Exception("Student or Course not found.");
+
+            if (!student.Courses.Any(c => c.ID == courseId))
+                throw new Exception("Student is not enrolled in the course.");
 
             student.Courses.Remove(course);
             _studentrepository.Update(student);
-
-
-
         }
 
         public void Update(int id, UpdateStudentDTO updateStudentDTO)

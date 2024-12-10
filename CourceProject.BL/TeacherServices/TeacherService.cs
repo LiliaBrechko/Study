@@ -27,14 +27,14 @@ namespace CourseProject.BL.TeacherServices
 
         public TeacherCard Get(int id)
         {
-            var currentteacher =  _teacherrepository.Get(id);
+            var currentteacher = _teacherrepository.Get(id);
             return mapper.Map<TeacherCard>(currentteacher);
         }
 
-        public IEnumerable<TeacherListItem> GetAll(IEnumerable<int>? ids)
+        public IEnumerable<TeacherListItem> GetAll(IEnumerable<int>? ids = null)
         {
             var teachers = ids != null
-               ?  _teacherrepository.GetAll(t => ids.Contains(t.ID))
+               ? _teacherrepository.GetAll(t => ids.Contains(t.ID))
                : _teacherrepository.GetAll();
 
 
@@ -43,7 +43,7 @@ namespace CourseProject.BL.TeacherServices
 
         public IEnumerable<CourseListItem> GetAllCource(int id)
         {
-            return _teacherrepository.Get(id, query=>query.Include(x=>x.Courses)).Courses.Select(mapper.Map<CourseListItem>);
+            return _teacherrepository.Get(id, query => query.Include(x => x.Courses)).Courses.Select(mapper.Map<CourseListItem>);
         }
 
         public void Update(int id, UpdateTeacherDTO updateTeacherDTO)
