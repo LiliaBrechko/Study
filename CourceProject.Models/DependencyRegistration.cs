@@ -1,4 +1,5 @@
-﻿using CourseProject.DAL.IRepositories;
+﻿using CourseProject.DAL.EF_Infrastructure;
+using CourseProject.DAL.IRepositories;
 using CourseProject.DAL.Models;
 using CourseProject.DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace CourseProject.DAL
     {
         public static IServiceCollection RegisterRepositories(this IServiceCollection collection)
         {
+            collection.AddScoped<DB_Configuration>();
             collection.AddTransient<IRepository<Course>, Repository<Course>>();
             collection.AddTransient<IRepository<Teacher>, Repository<Teacher>>();
             collection.AddTransient<IRepository<Student>, Repository<Student>>();

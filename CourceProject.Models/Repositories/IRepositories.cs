@@ -16,7 +16,7 @@ namespace CourseProject.DAL.IRepositories
             void Update(T entity);
             void Delete(params int[] id);
             T Get(int id, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null);
-            IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null);
+            IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null);
 
         }
     

@@ -34,7 +34,7 @@ namespace CourseProject.BL.CourceService
 
         public IEnumerable<CourseListItem> GetAll()
         {
-            return _courserepository.GetAll().Select(mapper.Map<CourseListItem>);
+            return _courserepository.GetAll(includeFunc: query => query.Include(c => c.Teacher)).Select(mapper.Map<CourseListItem>);
         }
 
         public IEnumerable<StudentCard> GetAllStudents()

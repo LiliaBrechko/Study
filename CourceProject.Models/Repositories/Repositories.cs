@@ -12,14 +12,21 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CourseProject.DAL.Repositories
 {
     public class Repository<T> : IDisposable, IRepository<T> where T : class, IEntity
     {
+        private readonly DB_Configuration context;
+
+        public Repository(DB_Configuration context)
+        {
+            this.context = context;
+        }
+
         public int Create(T entity)
         {
-            using var context = new DB_Configuration();
             context.Add(entity);
             context.SaveChanges();
             return entity.ID;
@@ -27,7 +34,6 @@ namespace CourseProject.DAL.Repositories
 
         public void Delete(params int[] id)
         {
-            using var context = new DB_Configuration();
             foreach (var entityID in id)
             {
                 var entityToRemove = context.Set<T>().First(x => x.ID == entityID);
@@ -39,14 +45,12 @@ namespace CourseProject.DAL.Repositories
 
         public void Dispose()
         {
-            using var context = new DB_Configuration();
             context.Dispose();
         }
 
         public T Get(int id, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
         {
-            using var context = new DB_Configuration();
-                IQueryable<T> query = context.Set<T>();
+            IQueryable<T> query = context.Set<T>();
 
             if (includeFunc != null)
             {
@@ -57,30 +61,27 @@ namespace CourseProject.DAL.Repositories
 
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
         {
-            using (var context = new DB_Configuration())
+            IQueryable<T> set = context.Set<T>();
+
+            if (predicate != null)
             {
-                IQueryable<T> set = context.Set<T>();
-
-                if(predicate != null)
-                {
-                    set = set.Where(predicate);
-                }
-
-                return set.ToArray();
+                set = set.Where(predicate);
             }
+
+            if (includeFunc != null)
+            {
+                set = includeFunc(set);
+            }
+
+            return set.ToArray();
         }
 
         public void Update(T entity)
         {
-            using (var context = new DB_Configuration())
-            {
-                context.Set<T>().Update(entity);
-                context.SaveChanges();
-
-            }
-
+            context.Set<T>().Update(entity);
+            context.SaveChanges();
         }
     }
 }
