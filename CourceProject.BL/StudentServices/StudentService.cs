@@ -64,7 +64,7 @@ namespace CourseProject.BL.StudentServices
 
         public IEnumerable<CourseListItem> GetAllCource(int studentId)
         {
-            return _studentrepository.Get(studentId, query=>query.Include(x=>x.Courses)).Courses!.Select(mapper.Map<CourseListItem>);
+            return _studentrepository.Get(studentId, query=>query.Include(x=>x.Courses).ThenInclude(x => x.Teacher)).Courses!.Select(mapper.Map<CourseListItem>);
         }
 
         public void UnEnrollToTheCource(int studentId, int courseId)

@@ -70,7 +70,7 @@ namespace CourseProject.IntegrationTests
             //assert
             var actualstudent = _studentRepository.Get(studentID, s => s.Include(c => c.Courses));
             student.Courses.Should().HaveCount(0);
-            
+
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace CourseProject.IntegrationTests
             var studentDTO = new AddStudentDTO() { Name = Guid.NewGuid().ToString() };
             //act
             var actualstudentId = _studentService.Create(studentDTO);
-            
+
             //assert
             var actualstudent = _studentRepository.Get(actualstudentId);
             actualstudent.Name.Should().Be(studentDTO.Name);
@@ -135,12 +135,66 @@ namespace CourseProject.IntegrationTests
         {
             //arrange
             var studentID = _studentRepository.Create(new Student() { Name = Guid.NewGuid().ToString() });
-        
+
             //act
             _studentService.Delete(studentID);
             //assert
             Action act = () => _studentRepository.Get(studentID);
             act.Should().Throw<InvalidOperationException>().WithMessage("Sequence contains no elements");
+
+
+        }
+        [Fact]
+        public void GetAllStudentsIsCorrect()
+        {
+            //arrange
+            var studentName1 = Guid.NewGuid().ToString();
+            var studentName2 = Guid.NewGuid().ToString();
+            var studentID1 = _studentRepository.Create(new Student() { Name = studentName1 });
+            var studentID2 = _studentRepository.Create(new Student() { Name = studentName2 });
+            //act
+            var allstudents = _studentService.GetAll(new[] { studentID1, studentID2 });
+            //assert
+            allstudents.Should().HaveCount(2);
+            allstudents.First(x => x.Id == studentID1).Name.Should().Be(studentName1);
+            allstudents.First(x => x.Id == studentID2).Name.Should().Be(studentName2);
+
+        }
+
+        [Fact]
+        public void GetAllStudentCoursesIsCorrect()
+        {
+            //arrange
+            var teacherName = Guid.NewGuid().ToString();
+            var teacherID = _teacherRepository.Create(new Teacher() { Name = teacherName, Speciality = Guid.NewGuid().ToString() });
+            var student = new Student()
+            {
+                Name = Guid.NewGuid().ToString(),
+                Courses = new List<Course>()
+                {
+                    new Course() { Name = Guid.NewGuid().ToString(), TeacherId = teacherID },
+                    new Course() { Name = Guid.NewGuid().ToString(), TeacherId = teacherID }
+                }
+            };
+
+            var studentID = _studentRepository.Create(student);
+            var course1 = student.Courses.First();
+            var course2 = student.Courses.Last();
+
+            //act
+            var allStudentCourses = _studentService.GetAllCource(studentID);
+            //assert
+            allStudentCourses.Should().HaveCount(2);
+            var actualFirstCourse = allStudentCourses.First(x => x.Id == course1.ID);
+            var actualSecondCourse = allStudentCourses.First(x => x.Id == course2.ID);
+            actualFirstCourse.Name.Should().Be(course1.Name);
+            actualFirstCourse.TeacherId.Should().Be(teacherID);
+            actualFirstCourse.TeacherName.Should().Be(teacherName);
+
+            actualSecondCourse.Name.Should().Be(course2.Name);
+            actualSecondCourse.TeacherId.Should().Be(teacherID);
+            actualSecondCourse.TeacherName.Should().Be(teacherName);
+
 
 
         }
