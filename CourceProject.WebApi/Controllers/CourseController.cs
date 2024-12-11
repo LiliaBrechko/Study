@@ -1,5 +1,6 @@
 using CourseProject.BL.CourceService;
 using CourseProject.BL.CourceService.DTO;
+using CourseProject.BL.StudentServices.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourceProject.WebApi.Controllers
@@ -46,6 +47,12 @@ namespace CourceProject.WebApi.Controllers
         public void UpdateCourse([FromRoute]int id, [FromBody] UpdateCourceDTO updateCourceDTO)
         {
              courseService.Update(id, updateCourceDTO);
+        }
+
+        [HttpGet, Route("{id}/students")]
+        public IEnumerable<StudentListItem> GetAllStudents([FromRoute] int id)
+        {
+            return courseService.GetAllStudents(id);
         }
 
 

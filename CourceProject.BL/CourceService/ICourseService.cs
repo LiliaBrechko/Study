@@ -13,9 +13,9 @@ namespace CourseProject.BL.CourceService
         int Create(AddCourceDTO addCourceDTO);
         void Update(int id, UpdateCourceDTO updateCourceDTO);
         CourceCard Get(int id);
-        IEnumerable<CourseListItem> GetAll();
+        IEnumerable<CourseListItem> GetAll(IEnumerable<int>? ids = null );
         void Delete(int id);
-        IEnumerable<StudentCard> GetAllStudents();
+        IEnumerable<StudentListItem> GetAllStudents(int id);
 
 
     }

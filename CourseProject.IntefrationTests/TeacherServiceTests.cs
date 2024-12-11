@@ -77,7 +77,7 @@ namespace CourseProject.IntegrationTests
             var newteacherId = _teacherrepository.Create(new Teacher() { Name = teacherName, Speciality = teacherSpeciality });
 
             //act
-            var teacher = _teacherrepository.Get(newteacherId);
+            var teacher = teacherservice.Get(newteacherId);
 
             //assert
             teacher.Name.Should().Be(teacherName);

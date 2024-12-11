@@ -32,14 +32,17 @@ namespace CourseProject.BL.CourceService
             return mapper.Map<CourceCard>(currentCourse);
         }
 
-        public IEnumerable<CourseListItem> GetAll()
+        public IEnumerable<CourseListItem> GetAll(IEnumerable<int>? ids = null)
         {
+            if (ids == null)
             return _courserepository.GetAll(includeFunc: query => query.Include(c => c.Teacher)).Select(mapper.Map<CourseListItem>);
+            return _courserepository.GetAll(x => ids.Contains(x.ID), query => query.Include(c => c.Teacher)).Select(mapper.Map<CourseListItem>);
+
         }
 
-        public IEnumerable<StudentCard> GetAllStudents()
+        public IEnumerable<StudentListItem> GetAllStudents(int id)
         {
-            return _studentrepository.GetAll().Select(mapper.Map<StudentCard>);
+            return _courserepository.Get(id, x => x.Include(s => s.Students)).Students.Select(mapper.Map<StudentListItem>);
         }
 
         public void Update(int id, UpdateCourceDTO updateCourceDTO)

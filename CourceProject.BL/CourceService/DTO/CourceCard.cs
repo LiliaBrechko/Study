@@ -1,4 +1,5 @@
-﻿using CourseProject.BL.StudentServices.DTO;
+﻿using CourseProject.BL.Primitives;
+using CourseProject.BL.StudentServices.DTO;
 using CourseProject.BL.TeacherServices.DTO;
 using CourseProject.DAL.Models;
 using System;
@@ -15,6 +16,6 @@ namespace CourseProject.BL.CourceService.DTO
         public string Name { get; set; } = string.Empty;
         public int TeacherId { get; set; }
         public string TeacherName { get; set; } = string.Empty;
-        public IEnumerable<(int, string)> Students { get; set; } = Enumerable.Empty<(int, string)>();
+        public IEnumerable<IdName> Students { get; set; } = Enumerable.Empty<IdName>();
     }
 }
