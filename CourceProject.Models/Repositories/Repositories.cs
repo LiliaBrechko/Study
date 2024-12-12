@@ -57,7 +57,7 @@ namespace CourseProject.DAL.Repositories
                 query = includeFunc(query);
             }
 
-            return query.First(x => x.ID == id);
+            return query.FirstOrDefault(x => x.ID == id);
 
         }
 

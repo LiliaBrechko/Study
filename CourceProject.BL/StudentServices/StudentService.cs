@@ -15,6 +15,7 @@ namespace CourseProject.BL.StudentServices
 {
     public class StudentService(IRepository<Course> _courserepository, IRepository<Student> _studentrepository, IMapper mapper) : IStudentService
     {
+        private const int MaxCountCourses = 5;
         public int Create(AddStudentDTO addStudentDTO)
         {
             var student = mapper.Map<Student>(addStudentDTO);
@@ -39,9 +40,8 @@ namespace CourseProject.BL.StudentServices
             if (student.Courses != null && student.Courses.Any(c => c.ID == courseId))
                 throw new Exception($"Student is already enrolled in the course with ID {courseId}.");
 
-
-            if (student.Courses == null)
-                student.Courses = new List<Course>();
+            if(student.Courses.Count() > MaxCountCourses) 
+                throw new Exception($"Student is already enrolled to {MaxCountCourses} courses.");
 
 
             student.Courses.Add(course);
