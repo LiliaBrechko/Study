@@ -47,7 +47,10 @@ namespace CourseProject.BL.CourceService
 
         public void Update(int id, UpdateCourceDTO updateCourceDTO)
         {
-            var courseToUpdate = _courserepository.Get(id);
+            
+            var courseToUpdate = _courserepository.Get(id, x => x.Include(s => s.Students));
+            if (courseToUpdate.Students.Any())
+                throw new Exception("You cant update course with students");
             courseToUpdate.Name = updateCourceDTO.Name;
             courseToUpdate.TeacherId = updateCourceDTO.TeacherId;
 
