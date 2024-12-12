@@ -16,7 +16,8 @@ namespace CourseProject.BL.TeacherServices
     {
         public int Create(AddTeacherDTO addTeacherDTO)
         {
-            var teacher = mapper.Map<Teacher>(addTeacherDTO);
+            NameValidation(addTeacherDTO.Name);
+            var teacher = mapper.Map<Teacher>(addTeacherDTO);                      
             return _teacherrepository.Create(teacher);
         }
 
@@ -48,11 +49,20 @@ namespace CourseProject.BL.TeacherServices
 
         public void Update(int id, UpdateTeacherDTO updateTeacherDTO)
         {
+            NameValidation(updateTeacherDTO.Name);
             var teacherToUpdate = _teacherrepository.Get(id);
             teacherToUpdate.Name = updateTeacherDTO.Name;
             teacherToUpdate.Speciality = updateTeacherDTO.Speciality;
 
             _teacherrepository.Update(teacherToUpdate);
+        }
+
+        private void NameValidation(string name)
+        {
+            if (name.Length > 20)
+                throw new Exception("Name must be shorter");
+            if (name.Length < 3)
+                throw new Exception("Name must be longer");
         }
     }
 }
